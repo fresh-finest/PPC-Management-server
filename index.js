@@ -8,7 +8,6 @@ const colors = require("colors");
 
 dotenv.config();
 
-
 app.use(express.json());
 app.use(cors());
 
