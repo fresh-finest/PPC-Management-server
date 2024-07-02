@@ -31,6 +31,11 @@ app.get("/",(req,res)=>{
     res.send("server is running.");
 })
 
+
+const userRoute = require("./src/routes/user")
+
+
+app.use("/api/user",userRoute);
 /*
  const authRoute = require("./src/routes/authRoute");
  const courseRoute = require("./src/routes/courseRoute")
