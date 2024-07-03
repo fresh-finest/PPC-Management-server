@@ -12,7 +12,7 @@ exports.signin = async(req,res,next)=>{
         if (!validUser) return next(errorHandler(404, "User not found"));
 
         const validPassword = await bcrypt.compare(password, validUser.password);
-        if (!validPassword) return next(errorHandler(401, "Wrong Credential."));
+        if (!validPassword) return next(errorHandler(401, "Wrong Password."));
 
         if (!process.env.JWT_SECRET) {
             return next(errorHandler(500, "JWT_SECRET environment variable not set"));
