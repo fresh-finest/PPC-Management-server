@@ -40,9 +40,10 @@ app.get("/",(req,res)=>{
 
 
 const userRoute = require("./src/routes/user");
-
+const authRoute = require("./src/routes/auth");
 
 app.use("/api/user",userRoute);
+app.use("/api/signin",authRoute);
 
 
 
