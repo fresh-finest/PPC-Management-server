@@ -1,4 +1,4 @@
-const { createUserService, getAllUserService } = require("../services/userService")
+const { createUserService, getAllUserService, deleteUserServiceById } = require("../services/userService")
 const bcrypt = require('bcryptjs');
 
 exports.createUser = async(req,res,next)=>{
@@ -13,9 +13,7 @@ exports.createUser = async(req,res,next)=>{
 
         const result  = await createUserService(newUser);
 
-        
-
-
+    
         res.status(201).json({
             status:"Success",
             message:"Successfully added new user.",
@@ -36,7 +34,7 @@ exports.getAllUser=async(req,res,next)=>{
         const result = await getAllUserService();
 
         console.log(process.env.JWT_SECRET);
-        
+
         const userWithoutPassword = result.map(user=>{
             const {password,...userWithoutPassword} = user._doc;
             return userWithoutPassword;
@@ -53,5 +51,21 @@ exports.getAllUser=async(req,res,next)=>{
             message:"Couldn't fetch data.",
             error:error.message
         })
+    }
+}
+
+exports.deleteUserById = async(req,res,next)=>{
+    try {
+        const {id} = req.params;
+
+        const result = await deleteUserServiceById(id);
+
+        res.status(200).json({
+            status:"Success",
+            message:"Successfully deleted user"
+
+        })
+    } catch (error) {
+        next(user)
     }
 }
