@@ -15,6 +15,7 @@ exports.createUser = async(req,res,next)=>{
 
         
 
+
         res.status(201).json({
             status:"Success",
             message:"Successfully added new user.",
@@ -34,7 +35,8 @@ exports.getAllUser=async(req,res,next)=>{
     try {
         const result = await getAllUserService();
 
-
+        console.log(process.env.JWT_SECRET);
+        
         const userWithoutPassword = result.map(user=>{
             const {password,...userWithoutPassword} = user._doc;
             return userWithoutPassword;

@@ -40,37 +40,18 @@ app.get("/",(req,res)=>{
 
 
 const userRoute = require("./src/routes/user");
-// const cookieParser = require("cookie-parser");
 
 
 app.use("/api/user",userRoute);
-/*
- const authRoute = require("./src/routes/authRoute");
- const courseRoute = require("./src/routes/courseRoute");
-
-
-app.use("/api/auth",authRoute);
-app.use("/api/course",courseRoute);
-
-
-
-
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname,'client','dist','index.html'));
-});
-
-*/
-
 
 
 
 const generateSecretKey = () => {
-  const secretKey = crypto.randomBytes(64); // 32 bytes = 256 bits
+  const secretKey = crypto.randomBytes(64); 
   return secretKey.toString('base64');
 };
 
-process.env.JWT_SECRET = generateSecretKey();
+
 
 
 
