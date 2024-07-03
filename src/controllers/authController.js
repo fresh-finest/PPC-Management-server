@@ -5,10 +5,10 @@ const bcrypt = require('bcryptjs');
 const jwt  = require("jsonwebtoken");
 
 exports.signin = async(req,res,next)=>{
-    const {userName,password} = req.body;
+    const {email,password} = req.body;
 
     try {
-        const validUser = await User.findOne({ userName: userName });
+        const validUser = await User.findOne({ email: email });
         if (!validUser) return next(errorHandler(404, "User not found"));
 
         const validPassword = await bcrypt.compare(password, validUser.password);
@@ -18,7 +18,7 @@ exports.signin = async(req,res,next)=>{
             return next(errorHandler(500, "JWT_SECRET environment variable not set"));
         }
 
-        const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
 
         const { password: pass, ...rest } = validUser._doc;
 
