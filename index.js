@@ -46,7 +46,7 @@ const userRoute = require("./src/routes/user");
 app.use("/api/user",userRoute);
 /*
  const authRoute = require("./src/routes/authRoute");
- const courseRoute = require("./src/routes/courseRoute")
+ const courseRoute = require("./src/routes/courseRoute");
 
 
 app.use("/api/auth",authRoute);
