@@ -15,3 +15,15 @@ exports.deleteUserServiceById = async(id)=>{
     const deleteUser = await User.deleteOne({_id:id});
     return deleteUser;
 }
+
+exports.updateUserServiceById = async(id,data)=>{
+    const user = await User.updateOne(
+        {_id:id},
+        {
+            $set:data,
+        },
+        {runValidators:true}
+    );
+    return user;
+}
+

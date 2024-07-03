@@ -54,7 +54,7 @@ const generateSecretKey = () => {
 
 
 
-
+console.log(generateSecretKey());
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

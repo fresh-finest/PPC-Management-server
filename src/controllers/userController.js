@@ -1,4 +1,4 @@
-const { createUserService, getAllUserService, deleteUserServiceById } = require("../services/userService")
+const { createUserService, getAllUserService, deleteUserServiceById, updateUserServiceById } = require("../services/userService")
 const bcrypt = require('bcryptjs');
 
 exports.createUser = async(req,res,next)=>{
@@ -33,8 +33,7 @@ exports.getAllUser=async(req,res,next)=>{
     try {
         const result = await getAllUserService();
 
-        console.log(process.env.JWT_SECRET);
-
+       
         const userWithoutPassword = result.map(user=>{
             const {password,...userWithoutPassword} = user._doc;
             return userWithoutPassword;
@@ -66,6 +65,32 @@ exports.deleteUserById = async(req,res,next)=>{
 
         })
     } catch (error) {
-        next(user)
+        res.status(400).json({
+            status:"Fails",
+            message:"Couldn't deleted user.",
+            error:error.message
+          })
+       }
+    }
+
+
+exports.updateUserById = async(req,res,next)=>{
+    try {
+
+        const {id} = req.params;
+
+        const result = await updateUserServiceById(id,req.body);
+        res.status(200).json({
+            status:"Success",
+            message:"Successfully updated data.",
+            result
+        })
+        
+    } catch (error) {
+       res.status(400).json({
+         status:"Fails",
+         message:"Couldn't updated user.",
+         error:error.message
+       })
     }
 }
