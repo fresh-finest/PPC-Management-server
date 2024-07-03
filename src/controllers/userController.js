@@ -1,5 +1,7 @@
-const { createUserService, getAllUserService, deleteUserServiceById, updateUserServiceById } = require("../services/userService")
 const bcrypt = require('bcryptjs');
+
+const { createUserService, getAllUserService, deleteUserServiceById, updateUserServiceById } = require("../services/userService")
+
 
 exports.createUser = async(req,res,next)=>{
     try {
