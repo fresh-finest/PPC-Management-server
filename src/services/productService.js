@@ -15,7 +15,7 @@ exports.getproductServiceById = async(id)=>{
     return product;
 }
 
-exports.updateServiceById = async(id,data)=>{
+exports.updateProductServiceById = async(id,data)=>{
     const product = await Product.updateOne(
         {_id:id},
         {
