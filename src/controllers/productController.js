@@ -1,4 +1,4 @@
-const { createProductService, getProductService } = require("../services/productService");
+const { createProductService, getProductService, getproductServiceById } = require("../services/productService");
 const { errorHandler } = require("../utils/errorHandler");
 
 exports.createProduct = async(req,res,next)=>{
@@ -29,4 +29,16 @@ exports.getProduct = async(req,res,next)=>{
     }
 }
 
-
+exports.getProductById = async(req,res,next)=>{
+    try {
+        const {id} = req.params;
+        const result = await getproductServiceById(id);
+        res.status(200).json({
+            status:"Success",
+            message:"Successfully fetch data.",        
+            result
+            })
+    } catch (error) {
+        next(errorHandler(400,"Couldn't fetch data."))
+    }
+}

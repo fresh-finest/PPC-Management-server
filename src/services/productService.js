@@ -10,8 +10,8 @@ exports.getProductService = async()=>{
     return product;
 }
 
-exports.productServiceById = async(id)=>{
-    const product = await Product.findOne({_id});
+exports.getproductServiceById = async(id)=>{
+    const product = await Product.findOne({_id:id});
     return product;
 }
 
