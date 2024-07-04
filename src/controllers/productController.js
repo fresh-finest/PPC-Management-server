@@ -21,10 +21,11 @@ exports.getProduct = async(req,res,next)=>{
 
         res.status(200).json({
             status:"Success",
-            message:"Succesfully fetched product",
+            message:"Succesfully fetched product.",
             result
         })
     } catch (error) {
-        next(errorHandler(400,"Couldn't fetch data."))
+        next(errorHandler(500,"Couldn't fetch data."))
     }
 }
+

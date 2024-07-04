@@ -6,6 +6,7 @@ const crypto = require('crypto');
 const cors = require("cors");
 const dotenv = require("dotenv");
 const colors = require("colors");
+const bodyParser = require('body-parser');
 
 
 dotenv.config();
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
 
+app.use(bodyParser.json());
 
 
 mongoose
@@ -42,10 +44,12 @@ app.get("/",(req,res)=>{
 const userRoute = require("./src/routes/user");
 const authRoute = require("./src/routes/auth");
 const productRoute = require("./src/routes/product");
+const testRoute = require("./src/routes/testRoute")
 
 app.use("/api/user",userRoute);
 app.use("/api/signin",authRoute);
 app.use("/api/product",productRoute);
+app.use("/api/test",testRoute);
 
 
 
