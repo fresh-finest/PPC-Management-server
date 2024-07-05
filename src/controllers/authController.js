@@ -73,3 +73,41 @@ exports.forgetPassword = async(req,res)=>{
 
 
 
+exports.resetPassword = (req,res)=>{
+    const {token} = req.params;
+
+    try {
+        const {email} = jwt.verify(token,process.env.JWT_SECRET);
+        res.send({email,token});
+    } catch (error) {
+        res.status(400).send('Invalid or expired token.');
+    }
+}
+
+exports.setPassword = async(req,res)=>{
+    const {token} = req.params;
+
+    const password = req.body;
+
+    try {
+        const decoded = jwt.verify(token,process.env.JWT_SECRET);
+        const user = await User.findOne({
+            email:decoded.email, 
+            resetPasswordToken:token,
+            resetPasswordExpires:{$gt:Date.now()}
+        })
+
+        if(!user){
+            return res.status(400).send('Invalid or expired token.');
+        }
+
+        user.password = bcrypt.hashSync(password,8);
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
+        await user.save();
+
+        res.send('Password has been reset successfully. ');
+    } catch (error) {
+        res.status(400).send('Invalid or expired token.');
+    }
+}
