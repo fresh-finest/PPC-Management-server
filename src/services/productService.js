@@ -38,28 +38,15 @@ exports.bulkUpdateProductService = async(data)=>{
     return updateProducts;
 }
 
-exports.deleteProductById = async(id)=>{
-    const deleteProduct = await Product.deleteOne({_id:id});
+exports.deleteProductServiceById = async (id) => {
+    const deleteProduct = await Product.deleteOne({ _id: id });
     return deleteProduct;
-}
-
-exports.bulkDeleteProductService = async(ids)=>{
-    const result = await Product.deleteMany({_id:ids});
+};
+exports.bulkDeleteProductService = async (ids) => {
+    const result = await Product.deleteMany({ _id: ids });
     return result;
-}
-
-/*
-
-exports.bulkDeleteProductService = async(ids)=>{
-
-    if(!Array.isArray(ids) || ids.length === 0){
-       throw new Error("Invalid input: 'ids' must be a non-empty array.");
-    }
-
-    const result = await Product.deleteMany({
-        _id:{$in: ids}
-    });
-    return result;
-    }
-
-*/
+  };
+  exports.serviceBulkDeleteProduct = async(ids)=>{
+    const deletedProducts = await Product.deleteMany({_id:ids});
+    return deletedProducts;
+  }
