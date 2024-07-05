@@ -45,13 +45,13 @@ exports.transporter = nodemailer.createTransport({
 exports.forgetPassword = async(req,res)=>{
     const {email} = req.body;
     const user = await User.findOne({email});
-
+    console.log(user.userName);
     if(!user){
         return res.status(400).send('User with this email does not exist.');
     }
 
     const token = jwt.sign({email},process.env.JWT_SECRET,{expiresIn:'1h'});
-
+//    console.log(token);
     user.resetPasswordtoken = token;
     user.resetPasswordExpires = Date.now()+3600000; // 1 hour
     await user.save();
