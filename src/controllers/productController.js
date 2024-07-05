@@ -109,7 +109,7 @@ exports.deleteProductById = async (req, res, next) => {
 exports.bulkDeleteProduct = async(req,res,next)=>{
     try {
       
-      const result = await serviceBulkDeleteProduct(req.body.ids);
+      const result = await bulkDeleteProductService(req.body.ids);
   
       if(!result.deletedCount){
         return res.status(400).json({
