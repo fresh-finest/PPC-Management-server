@@ -1,4 +1,4 @@
-const { createProductService, getProductService, getproductServiceById, updateProductServiceById } = require("../services/productService");
+const { createProductService, getProductService, getproductServiceById, updateProductServiceById, bulkDeleteProductService, bulkUpdateProductService } = require("../services/productService");
 const { errorHandler } = require("../utils/errorHandler");
 
 exports.createProduct = async(req,res,next)=>{
@@ -57,5 +57,26 @@ exports.updateProductById = async(req,res,next)=>{
     } catch (error) {
      console.log(error.message);
         next(errorHandler(400,"Couldn't updated data."));
+    }
+}
+
+exports.bulkUpdateProduct = async(req,res,next)=>{
+    try {
+        const products  = req.body;
+        if(!Array.isArray(products) || products.length ===0){
+            return res.status(400).json({
+                message:"Invalid input: expected an array of products."
+            })
+        }
+
+        const result = await bulkUpdateProductService(products);
+
+        res.status(200).json({
+            status:"Succcess",
+            message:"Products updated successfully",
+            result
+        })
+    } catch (error) {
+        next(errorHandler(500,"An error occurd while updataing products."));
     }
 }
