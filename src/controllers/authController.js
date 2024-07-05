@@ -3,6 +3,8 @@ const { errorHandler } = require("../utils/errorHandler");
 
 const bcrypt = require('bcryptjs');
 const jwt  = require("jsonwebtoken");
+const nodemailer = require('nodemailer');
+
 
 exports.signin = async(req,res,next)=>{
     const {email,password} = req.body;
@@ -30,3 +32,44 @@ exports.signin = async(req,res,next)=>{
         next(error);
     }
 }
+
+exports.transporter = nodemailer.createTransport({
+    service:'gmail',
+    auth:{
+        user:process.env.EMAIL_USER,
+        pass:process.env.EMAIL_PASS
+    }
+});
+
+
+exports.forgetPassword = async(req,res)=>{
+    const {email} = req.body;
+    const user = await User.findOne({email});
+
+    if(!user){
+        return res.status(400).send('User with this email does not exist.');
+    }
+
+    const token = jwt.sign({email},process.env.JWT_SECRET,{expiresIn:'1h'});
+
+    user.resetPasswordtoken = token;
+    user.resetPasswordExpires = Date.now()+3600000; // 1 hour
+    await user.save();
+
+    const mailOptions={
+        from:process.env.EMAIL_USER,
+        to:email,
+        subject:"Password Reset Link",
+       html: `<p>Click <a href="http://localhost:3000/reset-password/${token}">here</a> to reset your password</p>`
+    };
+
+    this.transporter.sendMail(mailOptions,(error,info)=>{
+        if(error){
+            return res.status(500).send(error.toString());
+        }
+        res.send('Password reset link has been sent to your email. ');
+    })
+}
+
+
+

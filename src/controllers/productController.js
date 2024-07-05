@@ -59,7 +59,7 @@ exports.updateProductById = async (req, res, next) => {
 
     res.status(200).json({
       status: "Success",
-      message: "Successfully updated product.",
+      message: `Successfully updated product`,
       result,
     });
   } catch (error) {
@@ -119,7 +119,7 @@ exports.bulkDeleteProduct = async(req,res,next)=>{
       }
       res.status(200).json({
         status: 'Success',
-        message:'Successfully deleted data',
+        message:`${result.deletedCount} data are Successfully deleted data`,
         result
     })
       
