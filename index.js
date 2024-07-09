@@ -53,15 +53,6 @@ app.use("/api/test",testRoute);
 
 
 
-const generateSecretKey = () => {
-  const secretKey = crypto.randomBytes(64); 
-  return secretKey.toString('base64');
-};
-
-
-
-console.log(generateSecretKey());
-
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal Server Error";
