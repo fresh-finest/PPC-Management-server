@@ -17,9 +17,9 @@ app.use(cors());
 
 app.use(bodyParser.json());
 
-
+const MONGO= "mongodb+srv://bb:fresh-finest@cluster0.fbizqwv.mongodb.net/ppc-db?retryWrites=true&w=majority&appName=Cluster0"
 mongoose
-  .connect(process.env.MONGO)
+  .connect(MONGO)
   .then(() => {
     console.log(`Connected to MongoDB!`.green.bold);
   })
