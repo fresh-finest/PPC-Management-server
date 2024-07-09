@@ -17,7 +17,9 @@ app.use(cors());
 
 app.use(bodyParser.json());
 
-const MONGO= "mongodb+srv://bb:fresh-finest@cluster0.fbizqwv.mongodb.net/ppc-db?retryWrites=true&w=majority&appName=Cluster0"
+// const MONGO= "mongodb+srv://bb:fresh-finest@cluster0.fbizqwv.mongodb.net/ppc-db?retryWrites=true&w=majority&appName=Cluster0"
+const MONGO= "mongodb+srv://bipro:bipro@cluster0.uo7uglt.mongodb.net/ppc-db?retryWrites=true&w=majority";
+
 mongoose
   .connect(MONGO)
   .then(() => {
