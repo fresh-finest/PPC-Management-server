@@ -7,7 +7,7 @@ const router  = express.Router();
 
 router.route("/")
 .post(createUser)
-.get(authenticateUser,authorizeAdmin,getAllUser)
+.get(getAllUser)
 
 router.route("/:id").delete(deleteUserById).put(updateUserById);
 
