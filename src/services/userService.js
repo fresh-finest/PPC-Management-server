@@ -11,6 +11,11 @@ exports.getAllUserService = async()=>{
     return user;
 }
 
+exports.getUserServiceByEmail=async(email)=>{
+    const user = await User.findOne({email:email});
+    return user;
+}
+
 exports.deleteUserServiceById = async(id)=>{
     const deleteUser = await User.deleteOne({_id:id});
     return deleteUser;

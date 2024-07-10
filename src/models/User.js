@@ -31,6 +31,13 @@ const userSchema = mongoose.Schema({
     },
     resetPasswordExpires: {
         type: Date
+    },
+    permissions:{
+    read: { type: Boolean, default: false },
+    write: { type: Boolean, default: false },
+    update:{type:Boolean, default: false},
+    delete: { type: Boolean, default: false },
+    analysis:{type: Boolean, default: false}
     }
 }, { timestamps: true });
 
