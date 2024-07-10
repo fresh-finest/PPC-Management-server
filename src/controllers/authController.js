@@ -25,9 +25,19 @@ exports.signin = async(req,res,next)=>{
         const { password: pass, ...rest } = validUser._doc;
 
         res
-            .cookie("access_token", token, { httpOnly: true, secure: true, sameSite: 'strict' })
+            .cookie("access_token", token, { httpOnly: true})
             .status(200)
             .json(rest);
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+exports.logOut = async(req,res,next)=>{
+    try {
+        res.clearCookie('access_token');
+        res.status(200).json('User has been logged out1.')
     } catch (error) {
         next(error);
     }
