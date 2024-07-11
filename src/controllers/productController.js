@@ -19,7 +19,11 @@ exports.createProduct = async (req, res, next) => {
       result,
     });
   } catch (error) {
-    next(errorHandler(400, "Couldn't create product."));
+    res.status(400).json({
+      status:"Fails",
+      message:"Couldn't add products",
+      error:error.message
+    })
   }
 };
 
