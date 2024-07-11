@@ -1,14 +1,35 @@
 const mongoose = require("mongoose");
 
 const productSchema  = new mongoose.Schema({
-    asin:{
+    sku:{
         type: String,
         required:true,
         unique:true
     },
-    name:{
+    title:{
         type:String,
         required: true,
+    },
+    campaigns:{
+        type:Number,
+    },
+    ctr:{
+        type:Number,
+    },
+    impressions:{
+        type:Number,
+    },
+    spend:{
+        type:Number,
+    },
+    clicks:{
+        type:Number,
+    },
+    cpc:{
+        type:Number,
+    },
+    acos:{
+        type:String,
     },
     category:{
         type:String,
