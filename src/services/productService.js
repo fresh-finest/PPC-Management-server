@@ -10,6 +10,15 @@ exports.getProductService = async()=>{
     return product;
 }
 
+exports.getLimitProductService = async (page, limit) => {
+    const skip = (page - 1) * limit;
+    const products = await Product.find().skip(skip).limit(limit); // Fetch paginated products
+    const total = await Product.countDocuments(); // Fetch total product count
+  
+    return { products, total };
+  };
+  
+
 exports.getproductServiceById = async(id)=>{
     const product = await Product.findOne({_id:id});
     return product;

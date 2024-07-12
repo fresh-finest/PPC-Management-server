@@ -7,6 +7,9 @@ const {
   bulkUpdateProductService,
   deleteProductServiceById,
 } = require("../services/productService");
+
+const Product = require("../models/Product")
+
 const { errorHandler } = require("../utils/errorHandler");
 
 exports.createProduct = async (req, res, next) => {
@@ -40,6 +43,36 @@ exports.getProduct = async (req, res, next) => {
     next(errorHandler(500, "Couldn't fetch data."));
   }
 };
+
+/* exports.getLimitProduct = async (req, res, next) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+
+    const { products, total } = await getProductService(page, limit);
+
+    res.status(200).json({
+      status: "Success",
+      message: "Succesfully fetched product.",
+      result: products,
+      total: total
+    });
+  } catch (error) {
+    next(errorHandler(500, "Couldn't fetch data."));
+  }
+}; */
+
+exports.getLimitProduct=async(req,res)=>{
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const skip = (page - 1) * limit;
+
+  const totalProducts = await Product.countDocuments();
+  const products = await Product.find().skip(skip).limit(limit);
+
+  res.json({ totalProducts, products });
+}
+
 
 exports.getProductById = async (req, res, next) => {
   try {
