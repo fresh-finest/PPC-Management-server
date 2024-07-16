@@ -6,7 +6,7 @@ const {authenticateUser, authorizeAdmin} = require('../middleware/authMiddleware
 const router  = express.Router();
 
 router.route("/")
-.post(createUser)
+.post(authenticateUser,createUser)
 .get(getAllUser)
 
 router.route("/:id").delete(deleteUserById).put(updateUserById);
