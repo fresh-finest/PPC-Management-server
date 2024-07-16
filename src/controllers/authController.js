@@ -34,46 +34,6 @@ exports.signin = async(req,res,next)=>{
 }
 
 
-// const redirectURI = 'http://localhost:5000/api/auth/amazon/signin';
-
-// exports.amazonSignIn=async(req,res)=>{
-//     const authorizationCode = req.query.code;
-
-//     if (!authorizationCode) {
-//         return res.status(400).send('Authorization code is missing');
-//     }
-
-//     // Here, exchange the authorization code for an access token
-//     // You will need to make a request to Amazon's token endpoint
-//     // Example using fetch
-//     fetch('https://api.amazon.com/auth/o2/token', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/x-www-form-urlencoded'
-//         },
-//         body: new URLSearchParams({
-//             grant_type: 'authorization_code',
-//             code: authorizationCode,
-//             redirect_uri: redirectURI,
-//             client_id: 'amzn1.application-oa2-client.c643907b96714c51944add2756b379c2',
-//             client_secret: 'amzn1.oa2-cs.v1.475df9ac07ff0e1af86cc7beac29746897b217f37af6496e350fba2c748889a1'
-//         })
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//         if (data.access_token) {
-//             // Handle the access token
-//             res.json(data);
-//         } else {
-//             res.status(400).send('Failed to obtain access token');
-//         }
-//     })
-//     .catch(error => {
-//         console.error('Error fetching access token:', error);
-//         res.status(500).send('Server error');
-//     });
-// };
-
 
 exports.logOut = async(req,res,next)=>{
     try {
