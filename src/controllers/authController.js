@@ -1,9 +1,11 @@
 const User = require("../models/User")
 const { errorHandler } = require("../utils/errorHandler");
-
+const config = require("../config/config");
+const axios = require('axios');
 const bcrypt = require('bcryptjs');
 const jwt  = require("jsonwebtoken");
 const nodemailer = require('nodemailer');
+const { response } = require("express");
 
 
 exports.signin = async(req,res,next)=>{
@@ -33,7 +35,32 @@ exports.signin = async(req,res,next)=>{
     }
 }
 
+exports.getAuthUrl=(req,res)=>{
+    const authUrl = `${config.authEndpoint}?client_id=${config.clientId}&scope=${encodeURIComponent(config.scopes)}&response_type=code&redirect_uri=${encodeURIComponent(config.redirectUri)}`;
 
+    res.redirect(authUrl);
+}
+
+exports.getToken = async(req,res)=>{
+    const {code}=req.query;
+
+    try {
+        const response = await axios.post(config.tokenEndpoint,null,{
+            params: {
+                grat_type:'authorization_code',
+                code:code,
+                redirect_uri:config.redirectUri,
+                client_id:config.clientId,
+                client_secret:config.clientSecret
+            }           
+        })
+        const {access_token, refresh_token} =response.data;
+        res.send({access_token, refresh_token});
+
+    } catch (error) {
+        res.status(500).send(error.response.data);
+    }
+}
 
 exports.logOut = async(req,res,next)=>{
     try {
